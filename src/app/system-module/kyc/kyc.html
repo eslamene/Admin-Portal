@@ -1,0 +1,778 @@
+
+<div class="kycDetailInfo" *ngIf="ShowkeyDetailInfo">
+    <p-dialog  *ngIf="showHistory" [position]="'right'"    header="history" [closeOnEscape]="false" [showHeader]="true" [modal]="true" [(visible)]="showHistory" [style]="{width: '15vw'}">
+       <div [innerHTML] ="currentHistory" ></div> 
+    </p-dialog>
+
+    <p-splitter [panelSizes]="[75, 25]"  styleClass="mb-5 p-3">
+        <ng-template pTemplate>
+            
+    <div class="review-step-1 col" >
+        <div class="row">
+            <p-button  icon="pi pi-arrow-left" class="mr-2" (click)="backFromDetailInfo()"></p-button>
+
+        <div class="col-10">
+    
+            <div class="step-3" style="margin-top: 10px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                        <label for="firstName">first Name</label>
+                        <input type="text" id="firstName"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.first_name}}"/>
+                    </div>
+                </div> 
+                    
+                <div class="col-4">
+                    <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.full_name}}"/>
+                </div>
+            </div> 
+            <div class="col-4">
+                <div class="form-group">
+                <label for="gender">Gender</label>
+                <input type="text" id="gender"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.gender}}"/>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+            <label for="age">Age</label>
+            <input type="text" id="age"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.age}}"/>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+        <label for="birth_governorate">Birth Governorate</label>
+        <input type="text" id="birth_governorate"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.birth_governorate}}"/>
+    </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+        <label for="Governorate">Governorate</label>
+        <input type="text" id="Governorate"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.governorate}}"/>
+    </div>
+    </div>
+        
+    
+    
+        <div class="col-4">
+            <div class="form-group">
+            <label for="religion">Religion</label>
+            <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.religion}}"/>
+        </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+            <label for="religion">Marital Status</label>
+            <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.marital_status}}"/>
+        </div>
+        </div>
+    
+            <div class="col-4">
+                <div class="form-group">
+                <label for="street">Street</label>
+                <input type="text" id="street" [disabled]="ocrInfoDisabled" [disabled]="ocrInfoDisabled"  class="form-control" value="{{currentPersonInfo.street}}"/>
+            </div>
+        </div> 
+    
+        <div class="col-4">
+            <div class="form-group">
+            <label for="front_nid">front_nid</label>
+            <input type="text" id="front_nid"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.front_nid}}"/>
+        </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+            <label for="back_nid">back_nid</label>
+            <input type="text" id="back_nid"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.back_nid}}"/>
+        </div>
+        </div> 
+        <div class="col-4">
+            <div class="form-group">
+            <label for="serial_number">Serial Number</label>
+            <input type="text" id="serial_number"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.serial_number}}"/>
+        </div>
+        </div> 
+        <div class="col-4">
+            <div class="form-group">
+            <label for="date_of_birth">Date of birth</label>
+            <input type="text" id="date_of_birth"  class="form-control" [disabled]="ocrInfoDisabled"  value="{{currentPersonInfo.date_of_birth}}"/>
+        </div>
+        </div> 
+        <div class="col-4">
+            <div class="form-group">
+            <label for="expiry_date">Expiry Date</label>
+            <input type="text" id="expiry_date"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.expiry_date}}"/>
+        </div>
+        </div> 
+        <div class="col-4">
+            <div class="form-group">
+            <label for="release_date">Release Date</label>
+            <input type="text" id="release_date"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.release_date}}"/>
+        </div>
+        </div> 
+        <div class="col-4">
+            <div class="form-group">
+            <label for="serial_number">KYC Status</label>
+            <input type="text" id="status"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.status}}"/>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-group">
+            <label for="serial_number">AML Status</label>
+            <input type="text" id="serial_number"  class="form-control" [disabled]="ocrInfoDisabled" value=""/>
+            </div>
+        </div>
+        <div class="col-4" *ngIf="isAccessible('UPDATE-STATUS')">
+            <p-splitButton style="margin-top:15px;"
+            label="update status"  raised 
+            (onClick)="selectSutatus('info')" 
+            [model]="statuses"  severity="warning" ></p-splitButton>
+        </div>
+    
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="col-2" >
+      
+        <p-image class="m-2 mt-5 align-center" src="{{currentPersonInfo.frontImage}}" [preview]="true" alt="Image" width="250">
+            <ng-template pTemplate="indicator">
+                <i class="pi pi-check"></i>
+            </ng-template>
+        </p-image>
+        <p-image class="m-2 align-center" src="{{currentPersonInfo.backImage}}" [preview]="true" alt="Image" width="250">
+            <ng-template pTemplate="indicator">
+                <i class="pi pi-check"></i>
+            </ng-template>
+        </p-image>
+        <button (click)="showKycHistory(currentPersonInfo.id)"  pButton  type="button"  icon="pi pi-history"  class="p-button p-button-secondary" style="
+        cursor: pointer;justify-content: center;margin-left:35%;"></button>
+        
+    </div>
+    </div>
+
+    </div>
+        </ng-template>
+     
+    </p-splitter>
+</div>
+
+ 
+<p-dialog   (onHide)="onHide(this)" *ngIf="crudPopup && !ShowkeyDetailInfo" [position]="'center'"    header="New KYC Process" [closeOnEscape]="false" [showHeader]="true" [modal]="true" [(visible)]="crudPopup" [style]="{width: '90vw'}">
+    <p-dialog *ngIf="dialogLoad"  header="loading" [closeOnEscape]="true" [showHeader]="true" [modal]="true" [(visible)]="dialogLoad" [style]="{width: '50vw'}">
+        <p-progressSpinner class="justify-content-center"  styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s"></p-progressSpinner>
+    
+    
+    </p-dialog>
+
+    <p-steps [model]="crudSteps" [readonly]="true" [activeIndex]="activeStepIndex" style="margin-bottom: 20px;"></p-steps>
+    <p-messages [(value)]="error" [enableService]="false"></p-messages>
+
+       <div class="container-fluid">
+    <div class="step-1" style="margin-top: 2%;"  *ngIf="activeStepIndex==0">
+        <div class="row" *ngIf="individual==null">
+            <div class="col-4"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-8">
+                <div class="form-group">
+                    <label for="businessId">Business Id</label>
+                    <input [(ngModel)]="businessId" class="form-control" type="text" /> 
+                </div>
+            </div>
+            <div class="col-4">
+                <button style="margin-top:30px ;" class="btn btn-success" (click)="searchForBusinessId()">Search</button>
+            </div>
+            </div>
+            </div>
+        </div>
+        <div class="container-fluid" *ngIf="individual!=null">
+        <div class="row" >
+            <div class="col-4">
+                <div class="form-group">
+
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" disabled class="form-control" value="{{individual.first_name}}"/>
+            </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" disabled class="form-control" value="{{individual.last_name}}"/>
+            </div>
+            </div>  <div class="col-4">
+                <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="firstName" disabled class="form-control" value="{{individual.name}}"/>
+            </div>
+        </div>  <div class="col-4">
+            <div class="form-group">
+            <label for="birthDate">Birth Date</label>
+            <input type="text" id="birthDate" disabled class="form-control" value="{{individual.dateOfBirth}}"/>
+        </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" disabled class="form-control" value="{{individual.address}}"/>
+            </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" disabled class="form-control" value="{{individual.email}}"/>
+                </div>
+                    </div>
+        </div>
+        <button class="btn btn-primary" (click)="nextStep()">Next</button>
+
+    </div>
+
+</div>
+    <div class="step-2" *ngIf="activeStepIndex==1" style="margin-top:50px ;">
+
+                <div class="row">
+                    <h2>upload national id </h2><br /><br />
+                <p-fileUpload [customUpload]="true" (uploadHandler)="onUpload($event)" (onUpload)="onUpload($event)" [multiple]="true" accept="image/*">
+                </p-fileUpload>
+            </div>
+            </div>
+            <div class="step-3" style="margin-top: 50px;" *ngIf="activeStepIndex==2">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                        <label for="firstName">first Name</label>
+                                        <input type="text" id="firstName"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.first_name"/>
+                                    </div>
+                                </div> 
+                                    
+                                <div class="col-4">
+                                    <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.full_name"/>
+                                </div>
+                            </div> 
+                            <div class="col-4">
+                                <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <input type="text" id="gender"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.gender"/>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="text" id="age"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.age"/>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                        <label for="birth_governorate">Birth Governorate</label>
+                        <input type="text" id="birth_governorate"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.birth_governorate"/>
+                    </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                        <label for="Governorate">Governorate</label>
+                        <input type="text" id="Governorate"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.governorate"/>
+                    </div>
+                    </div>
+                        
+
+
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="religion">Religion</label>
+                            <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.religion"/>
+                        </div>
+                        </div>
+
+                            <div class="col-4">
+                                <div class="form-group">
+                                <label for="street">Street</label>
+                                <input type="text" id="street" [disabled]="ocrInfoDisabled"  class="form-control" [(ngModel)]="nidModel.street"/>
+                            </div>
+                        </div> 
+
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="front_nid">front_nid</label>
+                            <input type="text" id="front_nid"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.front_nid"/>
+                        </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="back_nid">back_nid</label>
+                            <input type="text" id="back_nid"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.back_nid"/>
+                        </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="serial_number">Serial Number</label>
+                            <input type="text" id="serial_number"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.serial_number"/>
+                        </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="date_of_birth">Date of birth</label>
+                            <input type="text" id="date_of_birth"  class="form-control" [disabled]="ocrInfoDisabled"  [(ngModel)]="nidModel.date_of_birth"/>
+                        </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="expiry_date">Expiry Date</label>
+                            <input type="text" id="expiry_date"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.expiry_date"/>
+                        </div>
+                        </div> 
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="release_date">Release Date</label>
+                            <input type="text" id="release_date"  class="form-control" [disabled]="ocrInfoDisabled" [(ngModel)]="nidModel.release_date"/>
+                        </div>
+                        </div> 
+                
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="align-center" *ngIf="ocrInfoDisabled">
+                            <button  (click)="confirm()"class="btn btn-success m-3 p-3">Confirm</button>
+                            <button  (click)="ocrInfoEnableUpdate()" class="btn btn-info m-3 p-3">update</button>
+                    </div>
+                    <div class="align-center" *ngIf="!ocrInfoDisabled">
+                        <button  (click)="update()" class="btn btn-primary m-3 p-3">Submit</button>
+                        <button  (click)="ocrInfoEnableUpdate()" class="btn btn-warning m-3 p-3">Cancel</button>
+                </div>
+                </div>
+    </div>
+
+    <div class="step-4" *ngIf="activeStepIndex==3" style="margin-top:50px ;">
+        <div class="row">
+
+
+            <div class="col-10">
+        
+            <div class="step-3" style="margin-top: 10px;">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                            <label for="firstName">first Name</label>
+                            <input type="text" id="firstName"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.first_name}}"/>
+                        </div>
+                    </div> 
+                        
+                    <div class="col-4">
+                        <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.full_name}}"/>
+                    </div>
+                </div> 
+                <div class="col-4">
+                    <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <input type="text" id="gender"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.gender}}"/>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                <label for="age">Age</label>
+                <input type="text" id="age"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.age}}"/>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+            <label for="birth_governorate">Birth Governorate</label>
+            <input type="text" id="birth_governorate"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.birth_governorate}}"/>
+        </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group">
+            <label for="Governorate">Governorate</label>
+            <input type="text" id="Governorate"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.governorate}}"/>
+        </div>
+        </div>
+            
+        
+        
+            <div class="col-4">
+                <div class="form-group">
+                <label for="religion">Religion</label>
+                <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.religion}}"/>
+            </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                <label for="religion">Marital Status</label>
+                <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.marital_status}}"/>
+            </div>
+            </div>
+        
+                <div class="col-4">
+                    <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" id="street" [disabled]="ocrInfoDisabled" [disabled]="ocrInfoDisabled"  class="form-control" value="{{nidModel.street}}"/>
+                </div>
+            </div> 
+        
+            <div class="col-4">
+                <div class="form-group">
+                <label for="front_nid">front_nid</label>
+                <input type="text" id="front_nid"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.front_nid}}"/>
+            </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                <label for="back_nid">back_nid</label>
+                <input type="text" id="back_nid"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.back_nid}}"/>
+            </div>
+            </div> 
+            <div class="col-4">
+                <div class="form-group">
+                <label for="serial_number">Serial Number</label>
+                <input type="text" id="serial_number"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.serial_number}}"/>
+            </div>
+            </div> 
+            <div class="col-4">
+                <div class="form-group">
+                <label for="date_of_birth">Date of birth</label>
+                <input type="text" id="date_of_birth"  class="form-control" [disabled]="ocrInfoDisabled"  value="{{nidModel.date_of_birth}}"/>
+            </div>
+            </div> 
+            <div class="col-4">
+                <div class="form-group">
+                <label for="expiry_date">Expiry Date</label>
+                <input type="text" id="expiry_date"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.expiry_date}}"/>
+            </div>
+            </div> 
+            <div class="col-4">
+                <div class="form-group">
+                <label for="release_date">Release Date</label>
+                <input type="text" id="release_date"  class="form-control" [disabled]="ocrInfoDisabled" value="{{nidModel.release_date}}"/>
+            </div>
+            </div> 
+        
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="col-2">
+            
+            <p-image class="m-2 mt-5 align-center" src="{{nidModel.frontImage}}" [preview]="true" alt="Image" width="250">
+                <ng-template pTemplate="indicator">
+                    <i class="pi pi-check"></i>
+                </ng-template>
+            </p-image>
+            <p-image class="m-2 align-center" src="{{nidModel.backImage}}" [preview]="true" alt="Image" width="250">
+                <ng-template pTemplate="indicator">
+                    <i class="pi pi-check"></i>
+                </ng-template>
+            </p-image>
+        </div>
+        </div>
+</div>
+</div>
+
+</p-dialog>
+
+
+<p-dialog *ngIf="viewDetail && !ShowkeyDetailInfo " [position]="'center'" [modal] ="true" [(visible)]="viewDetail" [header]="'Review KYC'" [style]="{width: '90vw'}">
+    <p-dialog *ngIf="dialogLoad"  header="loading" [closeOnEscape]="true" [showHeader]="true" [modal]="true" [(visible)]="dialogLoad" [style]="{width: '50vw'}">
+        <p-progressSpinner class="justify-content-center"  styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s"></p-progressSpinner>
+    
+
+    </p-dialog>
+    <p-steps [model]="reviewKYCSteps" [readonly]="true" [activeIndex]="reviewActiveIndex" style="margin-bottom: 20px;"></p-steps>
+    <p-messages [(value)]="error" [enableService]="false"></p-messages>
+
+   <div class="review-step-1"  *ngIf="reviewActiveIndex==0">
+    <div class="row">
+
+
+    <div class="col-10">
+
+    <div class="step-3" style="margin-top: 10px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                    <label for="firstName">first Name</label>
+                    <input type="text" id="firstName"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.first_name}}"/>
+                </div>
+            </div> 
+                
+            <div class="col-4">
+                <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.full_name}}"/>
+            </div>
+        </div> 
+        <div class="col-4">
+            <div class="form-group">
+            <label for="gender">Gender</label>
+            <input type="text" id="gender"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.gender}}"/>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+        <label for="age">Age</label>
+        <input type="text" id="age"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.age}}"/>
+    </div>
+</div>
+<div class="col-4">
+    <div class="form-group">
+    <label for="birth_governorate">Birth Governorate</label>
+    <input type="text" id="birth_governorate"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.birth_governorate}}"/>
+</div>
+</div>
+<div class="col-4">
+    <div class="form-group">
+    <label for="Governorate">Governorate</label>
+    <input type="text" id="Governorate"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.governorate}}"/>
+</div>
+</div>
+    
+
+
+    <div class="col-4">
+        <div class="form-group">
+        <label for="religion">Religion</label>
+        <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.religion}}"/>
+    </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+        <label for="religion">Marital Status</label>
+        <input type="text" id="religion"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.marital_status}}"/>
+    </div>
+    </div>
+
+        <div class="col-4">
+            <div class="form-group">
+            <label for="street">Street</label>
+            <input type="text" id="street" [disabled]="ocrInfoDisabled" [disabled]="ocrInfoDisabled"  class="form-control" value="{{currentPersonInfo.street}}"/>
+        </div>
+    </div> 
+
+    <div class="col-4">
+        <div class="form-group">
+        <label for="front_nid">front_nid</label>
+        <input type="text" id="front_nid"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.front_nid}}"/>
+    </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+        <label for="back_nid">back_nid</label>
+        <input type="text" id="back_nid"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.back_nid}}"/>
+    </div>
+    </div> 
+    <div class="col-4">
+        <div class="form-group">
+        <label for="serial_number">Serial Number</label>
+        <input type="text" id="serial_number"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.serial_number}}"/>
+    </div>
+    </div> 
+    <div class="col-4">
+        <div class="form-group">
+        <label for="date_of_birth">Date of birth</label>
+        <input type="text" id="date_of_birth"  class="form-control" [disabled]="ocrInfoDisabled"  value="{{currentPersonInfo.date_of_birth}}"/>
+    </div>
+    </div> 
+    <div class="col-4">
+        <div class="form-group">
+        <label for="expiry_date">Expiry Date</label>
+        <input type="text" id="expiry_date"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.expiry_date}}"/>
+    </div>
+    </div> 
+    <div class="col-4">
+        <div class="form-group">
+        <label for="release_date">Release Date</label>
+        <input type="text" id="release_date"  class="form-control" [disabled]="ocrInfoDisabled" value="{{currentPersonInfo.release_date}}"/>
+    </div>
+    </div> 
+
+    <div class="col-4">
+        <div class="form-group">
+        <label for="serial_number">AML Status</label>
+        <input type="text" id="serial_number"  class="form-control" [disabled]="ocrInfoDisabled" value=""/>
+        </div>
+    </div>
+
+    </div>
+</div>
+</div>
+</div>
+<div class="col-2">
+    
+    <p-image class="m-2 mt-5 align-center" src="{{currentPersonInfo.frontImage}}" [preview]="true" alt="Image" width="250">
+        <ng-template pTemplate="indicator">
+            <i class="pi pi-check"></i>
+        </ng-template>
+    </p-image>
+    <p-image class="m-2 align-center" src="{{currentPersonInfo.backImage}}" [preview]="true" alt="Image" width="250">
+        <ng-template pTemplate="indicator">
+            <i class="pi pi-check"></i>
+        </ng-template>
+    </p-image>
+</div>
+</div>
+<div class="row" >
+
+    <p-messages  *ngIf="isCardAlreadyAssigned" severity="info">
+        <ng-template pTemplate>
+            <div class="ml-2">Customer Already Assigned to KitNo {{cardDetails['kitNo']}}</div>
+        </ng-template>
+    </p-messages>
+
+        <div class="align-center">
+
+            <button  *ngIf="currentPersonInfo.status!='APPROVED' && isAccessible('APPROVE')"  (click)="approve()" class="btn btn-success m-3 p-3">approve</button>
+            <button  *ngIf="!isCardAlreadyAssigned && isAccessible('LINKCARD')" (click)="linkCard()" class="btn btn-primary m-3 p-3">linkCard</button>
+            <button  *ngIf="currentPersonInfo.status!='REJECTED' && currentPersonInfo.status!='APPROVED' && isAccessible('REJECT')" (click)="reject()" class="btn btn-danger m-3 p-3">reject</button>
+            <button   (click)="closeDialog()" class="btn btn-warning m-3 p-3">close</button>
+
+    </div>
+</div>
+</div>
+
+<div class="review-step-2 align-center" *ngIf="reviewActiveIndex==1" style="width: 50%;margin:auto;margin-top:30px;background-color:#f7f7f7;padding:30px;">
+    <div class="row-fluid" *ngIf="cardDetails==null">
+
+        <div class="form-group">
+            <label>Enter Card Kit Number</label>
+            <input type="text" class="form-control" [(ngModel)]="kitNo" style="width: 100%;" />
+        </div>
+        <div class="align-center">
+            <button (click)="requestCard()"  class="btn btn-success m-3 p-3">Submit</button>
+        </div>
+    </div>
+    <div class="row-fluid" *ngIf="cardDetails!=null">
+           <p>Card holdername :    {{cardDetails['cardHolderName']}} <br />
+            Card No : {{cardDetails['cardNo']}}<br />
+            Expiry Date : {{cardDetails['expiryDate']}} <br />
+            <b>Daily Limits </b> <br />{{cardDetails['preference']['limitConfig'][0]['txnType'] }}/ {{cardDetails['preference']['limitConfig'][0]['dailyLimitValue'] }} <br />
+                           {{cardDetails['preference']['limitConfig'][1]['txnType'] }}/ {{cardDetails['preference']['limitConfig'][1]['dailyLimitValue'] }}<br />
+                           {{cardDetails['preference']['limitConfig'][2]['txnType'] }}/ {{cardDetails['preference']['limitConfig'][2]['dailyLimitValue'] }}<br />
+            </p>
+        
+        <div class="align-center">
+            <button (click)="closeDialog()"  class="btn btn-success m-3 p-3">close</button>
+        </div>
+    </div>
+</div>
+</p-dialog>
+
+
+
+<div *ngIf="!ShowkeyDetailInfo"  class="container-fluid">
+    
+    <div class="flex">
+        <p-button *ngIf="isAccessible('CREATE')" label="New" icon="pi pi-plus" class="mr-2" (click)="openCrudPopUp('insert')"></p-button>
+
+      <button *ngIf="isAccessible('EXPORT')"
+        type="button"
+        pButton
+        icon="pi pi-file-excel"
+        (click)="exportExcel()"
+        class="p-button-secondary mr-2"
+        pTooltip="XLS"
+        tooltipPosition="bottom"
+      >  Export</button>
+    </div>
+    <p-table #dt   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"  selectionMode="single" [rowsPerPageOptions]="[5,10,25,50,100]" [value]="kycPersons" styleClass="p-datatable-gridlines"  [rows]="5"   [paginator]="true" scrollHeight="600px" styleClass="mt-3" >
+        <ng-template pTemplate="header" >
+            <tr style="text-align: center;">
+                <th></th>
+                <th  pReorderableColumn pSortableColumn="business_id"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style= "justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="text" field="business_id"  display="menu">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">BusinessId </div>
+                      <div class="p-1"><p-sortIcon  field="business_id" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+                  <th  pReorderableColumn pSortableColumn="business_id"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style="justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="text" field="business_id"  display="menu">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">First Name </div>
+                      <div class="p-1"><p-sortIcon  field="business_id" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+                  <th  pReorderableColumn pSortableColumn="business_id"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style="justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="text" field="business_id"  display="menu">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">Full Name </div>
+                      <div class="p-1"><p-sortIcon  field="business_id" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+                  <th  pReorderableColumn pSortableColumn="date_of_birth"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style="justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="date" field="date_of_birth"  display="menu">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">Date of Birth </div>
+                      <div class="p-1"><p-sortIcon  field="date_of_birth" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+                  <th  pReorderableColumn pSortableColumn="expiry_date"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style="justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="date" field="expiry_date"  display="menu">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">Expiry date </div>
+                      <div class="p-1"><p-sortIcon  field="expiry_date" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+                  <th  pReorderableColumn pSortableColumn="status"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style="justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="text" field="status"  display="text">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">registration date</div>
+                      <div class="p-1"><p-sortIcon  field="status" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+                  <th  pReorderableColumn pSortableColumn="status"  [style]="{'width':'auto'}" >
+                    <div class="d-flex flex-row" style="justify-content: center;">
+                      <div class="p-1" >    <p-columnFilter  type="text" field="status"  display="menu">
+                      </p-columnFilter></div>
+                      <div class="p-1" style="margin-top: 2%;">status </div>
+                      <div class="p-1"><p-sortIcon  field="status" ></p-sortIcon></div>
+                    </div>
+    
+                  </th>
+    
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-person >
+            <tr  style="text-align: center;">
+                <th style="text-align: center;">   
+                    <div class="flex align-items-center justify-content-center gap-2  mt-3" style=" cursor: pointer;">
+                    <button (click)="onViewClicked(person)"  pButton pRipple type="button"  icon="pi pi-eye"  class="p-button-rounded p-button-text " style="
+    cursor: pointer;"></button>
+    <button (click)="onDetailClicked(person)"  pButton pRipple type="button"  icon="pi pi-info-circle"  class="p-button-rounded p-button-text " style="
+        cursor: pointer;"></button>
+                    </div>
+                        
+                 
+                </th>
+                <td style="text-align: center;">{{person.business_id}}</td>
+                <td style="text-align: center;">{{person.first_name}}</td>
+                <td style="text-align: center;">{{person.full_name}}</td>
+                <td style="text-align: center;">{{person.date_of_birth}}</td>
+                <td style="text-align: center;">{{person.expiry_date}}</td>
+                <td style="text-align: center;">{{person.created}}</td>
+
+                <td><p-tag [value]="person.status" [severity]="getSeverity(person.status)" class="align-center"></p-tag></td>
+
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

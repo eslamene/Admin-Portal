@@ -1,0 +1,12 @@
+<p-dropdown (onClear)="onClear()" (onShow)="onShow()"   (ngModelChange)="OpenChange($event)"  [options]="options" [(ngModel)]="typeModel" [optionLabel]="optionLabel" [filter]="true" filterBy="name" [showClear]="true" [placeholder]="labelName" >
+    <ng-template pTemplate="selectedItem">
+        <div class="flex align-items-center gap-2" *ngIf="typeModel">
+            <div>{{ typeModel.name }}</div>
+        </div>
+    </ng-template>
+    <ng-template let-option >
+        <div class="flex align-items-center gap-2">
+            <div>{{ option.name }}</div>
+        </div>
+    </ng-template>
+</p-dropdown>

@@ -1,0 +1,26 @@
+<title *ngIf="window">Flagship | {{window.name}}</title>
+<p-dialog *ngIf="loading"  header="loading" [closeOnEscape]="true" [showHeader]="true" [modal]="true" [(visible)]="loading" [style]="{width: '50vw'}">
+    <p-progressSpinner class="justify-content-center"  styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s"></p-progressSpinner>
+</p-dialog>
+
+<p-messages *ngIf="error" [(value)]="error" [enableService]="false"></p-messages>
+
+<div class="container-fluid" *ngIf="window">
+    <h2>  {{window.name}}</h2>
+    <sys-tab (windowMode)="windowMode($event)" *ngIf="window!=null && window.tabs!=null  && window.tabs.length > 0" [isMasterTab] = "true" [tab] = "window.tabs[0]" [recordId] ="recordid" [(window)] = "window"></sys-tab>
+    
+
+  
+
+   <p-tabView [(activeIndex)]="tabIndex" (onChange)="handleChange($event)" *ngIf="recordid > 0 && window.tabs.length > 1 && update">
+        <p-tabPanel *ngFor="let tab of window.tabs | slice:1;let i= index"   header="{{tab.name}}" [disabled] ="isDisabled(tab)">
+            <sys-tab *ngIf="tabIndex==i"   [(window)] = "window" [tab] = "tab"  ></sys-tab>
+        </p-tabPanel>
+     
+    </p-tabView> 
+
+
+
+    
+
+    </div>

@@ -1,0 +1,16 @@
+/*p-dropdown	Container element.
+p-dropdown-clearable	Container element when showClear is on.
+p-dropdown-label	Element to display label of selected option.
+p-dropdown-trigger	Icon element.
+p-dropdown-panel	Icon element.
+p-dropdown-items-wrapper	Wrapper element of items list.
+p-dropdown-items	List element of items.
+p-dropdown-item	An item in the list.
+p-dropdown-filter-container	Container of filter input.
+p-dropdown-filter	Filter element.
+p-dropdown-open*/
+
+.p-dropdown {
+    display: inline-block  !important;
+    width: inherit;
+}

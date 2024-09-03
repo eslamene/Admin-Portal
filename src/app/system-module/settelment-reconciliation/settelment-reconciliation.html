@@ -1,0 +1,7 @@
+<p-fileUpload name="demo[]"  (onUpload)="onUpload($event)" [multiple]="false" accept="image/*">
+    <ng-template pTemplate="content">
+        <ul *ngIf="uploadedFiles.length">
+            <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+        </ul>
+    </ng-template>
+</p-fileUpload>

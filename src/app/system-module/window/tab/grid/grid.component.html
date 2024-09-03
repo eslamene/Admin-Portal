@@ -1,0 +1,63 @@
+<p-messages *ngIf="error" [(value)]="error" [enableService]="false"></p-messages>
+
+  
+<div class="card flex-fill bg-white">
+  <div class="card-header" >
+    <button mat-raised-button color="primary" (click)="newRecordMethod()" style="margin-right:10px ;">{{newRecord}}</button>
+
+    <button mat-raised-button color="Basic" (click)="exportFile()" style="margin-right:10px ;">{{exportBtnLabel}}</button>
+
+  </div>
+
+  <div class="card-body">
+
+
+     <p-table  #dt1 [value]="rows" scrollHeight="500px"        [paginator]="true"
+     selectionMode="single" [rows]="10"  styleClass="p-datatable-gridlines" [showCurrentPageReport]="true" responsiveLayout="scroll"
+     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+     [rowsPerPageOptions]="[5, 10, 20]"
+     >
+      <ng-template pTemplate="header">
+       
+          <tr pFrozenColumn style="padding: 0.5rem;" >
+            <th  *ngIf="tab.gridFields.length > 0"  pReorderableColumn>Actions</th>
+              <th *ngFor="let field of tab.gridFields"  pSortableColumn="{{field.isSearchable?field.column.columnName:null}}"  [style]="{'width':'auto'}" >
+                <div class="d-flex flex-row">
+                  <div class="p-1" *ngIf="field.isSearchable" >    <p-columnFilter  type="{{getGridColumnType(field.column.columnType.name)}}" field="{{field.column.columnName}}"  display="menu">
+                  </p-columnFilter></div>
+                  <div class="p-1" style="margin-top: 2%;">{{field.name}} </div>
+                  <div class="p-1"  *ngIf="field.isSortable"><p-sortIcon  field="{{field.column.columnName}}" ></p-sortIcon></div>
+                </div>
+
+              </th>
+
+          </tr>
+      </ng-template>
+      <ng-template style="font-size: 9px;" class="GridTr" pTemplate="body" let-row  let-index="rowIndex">
+          <tr (click)="rowSelected(row,false)" [pSelectableRow]="row"  [style] = "'cursor:pointer;'" [pReorderableRow]="index" > 
+            <td  [pReorderableRow]="index" style="padding: 0.5rem;" >
+            <button class="btn btn-info"(click)="rowSelected(row,true)" style="color: aliceblue;"><i class="typcn typcn-eye-outline"></i></button>
+            </td>
+            <td *ngFor="let field of tab.gridFields" style="text-align:center">
+              <div *ngIf="field.column.columnType.name=='DATETIME' || field.column.columnType.name=='DATE'">{{row[field.column.columnName] | date:'dd-MM-yyyy'}}</div>
+              <div *ngIf="(field.column.columnType.name=='TABLE' || field.column.columnType.name=='TABLEDIRECT')&&row[field.column.tableObjectDomain]">{{row[field.column.tableObjectDomain][field.column.tableIndexedColumn]?row[field.column.tableObjectDomain][field.column.tableIndexedColumn]:row[field.column.tableObjectDomain]['name']}}</div>
+
+              <div *ngIf="field.column.columnType.name=='BOOLEAN'">
+
+                <i class="pi" [ngClass]="{'true-icon pi-check-circle': row[field.column.columnName], 'false-icon pi-times-circle': !row[field.column.columnName]}"></i>
+
+              </div>
+              <div *ngIf="field.column.columnType.name=='PASSWORD'">***********************</div>
+
+
+
+              <div *ngIf="field.column.columnType.name!='TABLE'&&field.column.columnType.name!='TABLEDIRECT'&&field.column.columnType.name!='DATETIME' && field.column.columnType.name!='BOOLEAN' && field.column.columnType.name!='DATE' && field.column.columnType.name!='PASSWORD'">{{row[field.column.columnName]}}</div>
+
+            </td>
+          </tr>
+      </ng-template>
+  </p-table>
+
+  </div>
+</div>
+

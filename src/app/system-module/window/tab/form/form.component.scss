@@ -1,0 +1,12 @@
+.nb-info::before {
+    content: '\e908';
+    color: red;
+}
+.window-form-input {
+    background: transparent;min-height: 40px;
+}
+
+.form-control{
+    overflow-wrap: break-word;
+}
+

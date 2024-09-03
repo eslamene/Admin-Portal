@@ -1,0 +1,55 @@
+<h1>{{process.name}}</h1>
+
+<div class="form" >
+      
+    <form #editForm="ngForm" (ngSubmit)="editForm.form.valid  && onSubmit(paramValues)"  novalidate>
+        <div *ngIf="errorMsg!=null" class="alert alert-danger">
+            <strong>Error : </strong> {{errorMsg}}
+          </div>
+
+        <div class="row">
+            <div class="col-md-4" *ngFor="let field of process.params">
+                <div class="form-group"  *ngIf="field.columnType.name=='DATE'">
+                    <label for="{{field.name}}">{{field.name}}</label> 
+                 <ngx-datepicker  name="{{field.columnName}}" [(ngModel)] = "paramValues[field.columnName]"></ngx-datepicker>
+                </div>
+             </div>
+
+
+        </div>
+        <button type="button" class="me-1 btn btn-rounded btn-success" style="margin-right:5px;margin-left:5px;" type="submit">submit</button>
+    </form>
+    <br />
+
+</div>
+<p-table  #dt1 [value]="rows" scrollHeight="500px"  
+[paginator]="true"  [rows]="10"  
+styleClass="p-datatable-gridlines" 
+[showCurrentPageReport]="true" 
+responsiveLayout="scroll"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+[rowsPerPageOptions]="[10,25,50,100,200]" 
+ [reorderableColumns]="true" >
+ <ng-template pTemplate="header">
+  
+     <tr pFrozenColumn>
+        <th *ngFor="let col of columns" pReorderableColumn pSortableColumn="col"  [style]="{'width':'auto'}" >
+            <div class="d-flex flex-row">
+              <div class="p-1"  >    <p-columnFilter  type="text"  display="menu">
+              </p-columnFilter></div>
+              <div class="p-1" style="margin-top: 2%;">{{col}} </div>
+              <div class="p-1"><p-sortIcon  field="{{col}}" ></p-sortIcon></div>
+            </div>
+          </th>
+
+     </tr>
+ </ng-template>
+ <ng-template style="font-size: 9px;" class="GridTr" pTemplate="body" let-row  let-index="rowIndex">
+     <tr  [pSelectableRow]="row"  [style] = "'cursor:pointer;'" [pReorderableRow]="index" > 
+       <td *ngFor="let col of columns" style="text-align:center;">
+         <div>{{row[col]}}</div>
+
+       </td>
+     </tr>
+ </ng-template>
+</p-table>

@@ -1,0 +1,210 @@
+
+
+<p-dialog *ngIf="activeProcess" (onHide)="closeActiveProcess()" header="{{activeProcess.name}}" [closeOnEscape]="true" [showHeader]="true" [modal]="true" [(visible)]="visible" [style]="{width: '50vw'}">
+  <p-progressSpinner class="justify-content-center" *ngIf="!processSubmitButton && activProcessError==null && !activeProcessSuccess"  styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration="2s"></p-progressSpinner>
+  <h1>{{activProcessError}}</h1>
+  <div *ngIf="activeProcessSuccess">
+    <h6>Processed successfully </h6> <br />
+    <button class="btn btn-secondary" (click)="closeActiveProcessAfterSuccess();">OK</button>
+  </div>
+  
+  
+  <p-button *ngIf="processSubmitButton" (click)="sudmitProcess()" label="Submit" severity="danger"></p-button>
+</p-dialog>
+
+<p-dialog header="Error" [(visible)]="showError" [modal]="true" [style]="{width: '50vw'}">
+    <p style="color: red;">
+       {{errorMsg}} 
+      </p>
+</p-dialog>
+
+<div class="toolbar" >
+
+    <button mat-raised-button color="primary" style="margin:5px;" *ngIf="detailsView && tab.isAllowInsert" (click)="toolbarAction('add')"><i class="fa fa-file" data-bs-toggle="tooltip" title="create new record"></i></button>
+
+    <button mat-raised-button color="accent" style="margin:5px;" *ngIf="detailsView && tab.isAllowUpdate" (click)="toolbarAction('edit')"><i class="fa fa-edit" data-bs-toggle="tooltip" title="edit"></i></button>
+    <button mat-raised-button color="warn" style="margin:5px;"  *ngIf="detailsView && tab.isAllowDelete" (click)="toolbarAction('delete')"><i class="fa fa-trash" data-bs-toggle="tooltip" title="delete"></i></button>
+
+
+    
+    <button mat-raised-button color="Basic"  style="margin:5px;"  *ngIf="detailsView" (click)="toolbarAction('grid')"><i class="fa fa-th" data-bs-toggle="tooltip" title="back "></i></button>
+    
+    </div>
+    
+    <div class="detail" *ngIf="tab.currentRow && !formView ">
+        
+        <div class="row">
+            <div class="col-md-4" *ngFor="let field of tab.detailFields"  >
+                <div class="form-group" *ngIf="validateDisplay(field);">
+                    <label *ngIf="field.column.columnType.name!='BUTTON'" for="{{field.name}}"><b>{{field.name}}</b></label>
+
+                    <div *ngIf="field.column.columnType.name=='TABLEDIRECT'"  class ="form-control window-form-input " id="{{field.name}}"   fullWidth  > 
+                        <div *ngIf="field.column.tableObjectDomain==null && currentRow[getDomainFromColumnName(field.column.columnName)] ">
+                            {{currentRow[getDomainFromColumnName(field.column.columnName)].name}} 
+                        </div>
+                        <div *ngIf="field.column.tableObjectDomain!=null && currentRow[field.column.tableObjectDomain]">
+                          {{currentRow[field.column.tableObjectDomain][field.column.tableIndexedColumn]}}
+                    </div>
+                    </div> 
+                     <div *ngIf="field.column.columnType.name=='TABLE'" style="background: transparent;" class ="form-control window-form-input" id="{{field.name}}"   fullWidth  > 
+                     <div *ngIf="currentRow[field.column.tableObjectDomain]">{{currentRow[field.column.tableObjectDomain].name}}  </div></div> 
+                     <div *ngIf="field.column.columnType.name=='ID' " style="background: transparent;" class ="form-control window-form-input" id="{{field.name}}"   fullWidth  >{{currentRow[field.column.columnName]}}</div> 
+    
+                     <div *ngIf="field.column.columnType.name=='TEXT' || field.column.columnType.name=='LIST' " style="background: transparent;" class ="form-control window-form-input" id="{{field.name}}"   fullWidth  >{{currentRow[field.column.columnName]}}</div> 
+                     <div *ngIf="field.column.columnType.name=='PASSWORD' " style="background: transparent;" class ="form-control window-form-input" id="{{field.name}}"   fullWidth  >**************</div> 
+
+                     <div *ngIf="field.column.columnType.name=='DECIMAL' || field.column.columnType.name=='NUMBER' " style="background: transparent;" class ="form-control window-form-input" id="{{field.name}}"   fullWidth  >{{currentRow[field.column.columnName]}}</div> 
+                     <div *ngIf="field.column.columnType.name=='BUTTON'" style="background: transparent;"  id="{{field.name}}"   fullWidth style="margin-top: 10%;" ><button class="btn btn-secondary"  data-bs-toggle="modal"
+                        data-bs-target="#active-process" (click)="handleProcess(field.column.process);">{{field.name}}</button></div> 
+    
+                     <div *ngIf="field.column.columnType.name=='DATETIME' || field.column.columnType.name=='DATE'"   style="background: transparent;" class ="form-control window-form-input" id="{{field.name}}" value="currentRow[field.column.columnName]"  fullWidth  >{{currentRow[field.column.columnName] |date:'dd-MM-yyyy'}}</div> 
+    
+                     <div class="row" *ngIf="field.column.columnType.name=='BOOLEAN'">
+
+                        <p-inputSwitch class="center" [(ngModel)]="currentRow[field.column.columnName]"  [disabled]="true" [readonly]="true" ></p-inputSwitch>
+                    </div>
+                
+                    </div>
+            
+            </div>
+    
+    
+        </div>
+        <hr />
+
+    </div>
+    
+    
+    <p-confirmDialog position="top" [style]="{width: '50vw'}">
+        Content
+    </p-confirmDialog>
+    
+
+    <div class="form" *ngIf="formView">
+      
+        <form #editForm="ngForm" (ngSubmit)="editForm.form.valid  && onSubmit(tempCurrentRow)" novalidate>
+            <div *ngIf="errorMsg!=null" class="alert alert-danger">
+                <strong>Error : </strong> {{errorMsg}}
+              </div>
+
+            <div class="row">
+
+                <div class="col-md-4" *ngFor="let field of tab.formFields">
+                    <div class="form-group" *ngIf="field.column.columnType.name=='TEXT' ">
+                        <label for="{{field.name}}">{{field.name}} <i *ngIf="field.description!=null && field.description!=''" class="nb-info" data-toggle="tooltip" data-placement="top" title="{{field.description}}" ></i>
+    
+                        </label>
+    
+                        <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].invalid " style="color: red; ">
+                            <div *ngIf=" editForm.controls[field.column.columnName].errors?.['required']">
+                            * please enter {{field.name}}
+                          </div>
+                        </div>
+                        <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].errors?.['pattern']" style="color:yellowgreen;">
+                            <div *ngIf="editForm.controls[field.column.columnName].errors?.['pattern']">
+                            * Invalid {{field.name}}
+                          </div></div>
+                                <input class ="form-control " id="{{field.name}}" [pattern]="field.regex!=null?field.regex:null" [required]="field.isRequired" nbInput fullWidth  [(ngModel)]  = "tempCurrentRow[field.column.columnName]"  #name="ngModel" name="{{field.column.columnName}}" />
+                             
+                              
+                            </div>
+    
+
+                            <div class="form-group" *ngIf="field.column.columnType.name=='PASSWORD' ">
+                                <label for="{{field.name}}">{{field.name}} <i *ngIf="field.description!=null && field.description!=''" class="nb-info" data-toggle="tooltip" data-placement="top" title="{{field.description}}" ></i>
+            
+                                </label>
+            
+                                <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].invalid " style="color: red; ">
+                                    <div *ngIf="editForm.controls[field.column.columnName].errors?.['required']">
+                                    * please enter {{field.name}}
+                                  </div>
+                                </div>
+                                <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].errors?.['pattern']" style="color:yellowgreen;">
+                                    <div *ngIf="editForm.controls[field.column.columnName].errors?.['pattern']">
+                                    * Invalid {{field.name}}
+                                  </div></div>
+                                        <input type="password" class ="form-control window-form-input" id="{{field.name}}" [pattern]="field.regex!=null?field.regex:null" [required]="field.isRequired" nbInput fullWidth  [(ngModel)]  = "tempCurrentRow[field.column.columnName]"  #name="ngModel" name="{{field.column.columnName}}" />
+                                     
+                                      
+                                    </div>
+
+
+                            <div class="form-group" *ngIf="field.column.columnType.name=='BIGTEXT' ">
+                                <label for="{{field.name}}">{{field.name}} <i *ngIf="field.description!=null && field.description!=''" class="nb-info" data-toggle="tooltip" data-placement="top" title="{{field.description}}" ></i>
+            
+                                </label>
+            
+                                <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].invalid " style="color: red; ">
+                                    <div *ngIf="editForm.controls[field.column.columnName].errors?.['required']">
+                                    * please enter {{field.name}}
+                                  </div>
+                                </div>
+                                <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].errors?.['pattern']" style="color:yellowgreen;">
+                                    <div *ngIf="editForm.controls[field.column.columnName].errors?.['pattern']">
+                                    * Invalid {{field.name}}
+                                  </div></div>
+                                        <textarea class ="form-control window-form-input" id="{{field.name}}" [pattern]="field.regex!=null?field.regex:null" [required]="field.isRequired" nbInput fullWidth  [(ngModel)]  = "tempCurrentRow[field.column.columnName]"  #name="ngModel" name="{{field.column.columnName}}" rows="3" cols="5"> </textarea>
+                                     
+                                      
+                                    </div>
+                    <div class="form-group" *ngIf="field.column.columnType.name=='DECIMAL' || field.column.columnType.name=='NUMBER' ">
+                        <label for="{{field.name}}">{{field.name}}</label>
+                        <p-inputNumber   id="{{field.name}}" [maxFractionDigits]="2" [(ngModel)]="tempCurrentRow[field.column.columnName]" [required]="field.isRequired"  name="{{field.column.columnName}}" #name="ngModel"  mode="decimal"></p-inputNumber>
+                        <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].invalid " style="color: red;">
+                            <div *ngIf="editForm.controls[field.column.columnName].errors?.['required']">
+                            * please enter {{field.name}}
+                          </div></div>
+    
+                          <div *ngIf="editForm.submitted && editForm.controls[field.column.columnName].invalid " style="color: yellow;">
+                            <div *ngIf="editForm.controls[field.column.columnName].errors?.['pattern']">
+                            * Invalid {{field.name}}
+                          </div></div>
+                    </div>
+                   
+    
+                    <div class="form-group" *ngIf="field.column.columnType.name=='BOOLEAN'">
+                        <label for="{{field.name}}">{{field.name}}</label>
+                            <div class="row" >
+                        <p-inputSwitch class="center" [(ngModel)]="tempCurrentRow[field.column.columnName]" [name]="field.column.columnName"    ></p-inputSwitch>
+                                </div>
+                    </div>
+                    <div class="form-group" *ngIf="field.column.columnType.name=='TABLEDIRECT'||field.column.columnType.name=='LIST'">
+                        <label for="{{field.name}}">{{field.name}}</label>
+                        <app-input-field [filter]="generateFilterMap(field.filter,tempCurrentRow)" [labelName]="field.column.columnName" [defaultValue] = "tempCurrentRow==null?null:tempCurrentRow[field.column.columnName]" (typeModelChange)="listTypeModelChange($event)" [bindValue] ="field.column.columnType.name=='LIST'?'value':'id'" [field]="field"  ></app-input-field>
+                        </div>
+                        <div class="form-group" *ngIf="field.column.columnType.name=='TABLE' && tab.table.type=='SYSTEM'" ngClass="{'hide-form-group': tab.column!=null&&tab.column.columnName==field.column.columnName}">
+                            <label for="{{field.name}}">{{field.name}}</label> 
+                            <app-input-field [labelName]="field.name" [bindValue]="field.column.tableColumnDomain" (typeModelChange)="listTypeModelChange($event)" [field]="field" [defaultValue] = "tempCurrentRow!=null&&tempCurrentRow[field.column.tableObjectDomain]!=null?tempCurrentRow[field.column.tableObjectDomain][field.column.tableColumnDomain]:null" ></app-input-field>
+                            </div>
+    
+                        <div class="form-group" *ngIf="field.column.columnType.name=='TABLE' && tab.table.type=='API' ">
+                            <label for="{{field.name}}">{{field.name}}</label> 
+                            <app-input-field  [labelName]="field.name" [bindValue]="field.column.tableColumnDomain" (typeModelChange)="listTypeModelChange($event)" [field]="field" [defaultValue] = "tempCurrentRow!=null&&tempCurrentRow[field.column.tableObjectDomain]?tempCurrentRow[field.column.tableObjectDomain][field.column.tableColumnDomain]:null" ></app-input-field>
+                            </div>
+                    <div class="form-group"  *ngIf="field.column.columnType.name=='DATETIME'||field.column.columnType.name=='DATE'">
+                        <label for="{{field.name}}">{{field.name}}</label> 
+                     <ngx-datepicker  name="{{field.column.columnName}}" [(ngModel)] = "tempCurrentRow[field.column.columnName]"></ngx-datepicker>
+                      <!-- <p-calendar  name="{{field.column.columnName}}" formControlName="date" dateFormat="dd/mm/yyyy" [(ngModel)] = "tempCurrentRow[field.column.columnName]"></p-calendar>
+--> 
+
+    
+                    </div>
+                    
+                </div>
+    
+    
+            </div>
+            <button type="button" class="me-1 btn btn-rounded btn-success" style="margin-right:5px;margin-left:5px;" type="submit">submit</button>
+            <button type="button" class="me-1 btn btn-rounded btn-danger" (click)="cancelForm()">Cancel</button>
+
+    
+    
+                <!--     <button nbButton outline status="success" style="margin-right:5px;margin-left:5px;" type="submit">Submit </button>
+                    <button nbButton outline status="danger" (click)="cancelForm()">Cancel</button>
+     -->
+    
+        </form>
+        <br />
+
+    </div>
